@@ -1,15 +1,19 @@
 {
   "name": "FELDA Bukit Kepayang Digital Estate System",
   "short_name": "FBK Estate",
-  "description": "Mobile-first digital estate field operations system for FELDA Bukit Kepayang.",
-  "start_url": "./index.html",
+  "description": "Digital estate field operations system for FELDA Bukit Kepayang.",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#08100d",
   "theme_color": "#0b1812",
   "orientation": "any",
   "icons": [
-    {"src":"icon-192.png","sizes":"192x192","type":"image/png"},
-    {"src":"icon-512.png","sizes":"512x512","type":"image/png"}
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
   ]
 }
