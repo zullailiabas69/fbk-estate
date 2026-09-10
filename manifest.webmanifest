@@ -1,8 +1,9 @@
 {
   "name": "FELDA Bukit Kepayang Digital Estate System",
   "short_name": "FBK Estate",
-  "description": "Digital estate field operations system for FELDA Bukit Kepayang.",
-  "start_url": "./",
+  "description": "Sistem operasi ladang digital FELDA Bukit Kepayang.",
+  "id": "./",
+  "start_url": "./?pwa=58",
   "scope": "./",
   "display": "standalone",
   "background_color": "#08100d",
