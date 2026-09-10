@@ -1,5 +1,14 @@
 # FELDA Bukit Kepayang Digital Estate System
 
-Mobile Field Final v4.1
+Production Web v4.2
 
-PWA untuk operasi ladang, GPS, routing, rekod Blok/Lot, pekerja/kontraktor, isu, foto bukti, laporan, analisis prestasi, backup/restore dan semakan integriti data.
+PWA lapangan untuk:
+- GPS dan routing OSM/OSRM
+- GeoPDF FELDA sebagai lapisan rujukan operasi
+- Rekod Blok/Lot dan kerja
+- Pekerja/kontraktor
+- Isu dan foto bukti
+- Dashboard, laporan dan analisis prestasi
+- Backup/restore dan audit data
+
+Nota: lapisan vektor calon tidak diaktifkan dalam build produksi kerana semantik lot/blok/saliran/jalan belum disahkan sebagai data rasmi.
