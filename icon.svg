@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<rect width="512" height="512" rx="96" fill="#08100d"/>
+<rect x="52" y="52" width="408" height="408" rx="82" fill="none" stroke="#d6a03a" stroke-width="18"/>
+<path d="M256 176v150" stroke="#eef3f0" stroke-width="18" stroke-linecap="round"/>
+<g fill="#2d7d4d">
+<ellipse cx="180" cy="190" rx="74" ry="30" transform="rotate(-18 180 190)"/>
+<ellipse cx="332" cy="190" rx="74" ry="30" transform="rotate(18 332 190)"/>
+<ellipse cx="205" cy="142" rx="68" ry="27" transform="rotate(-42 205 142)"/>
+<ellipse cx="307" cy="142" rx="68" ry="27" transform="rotate(42 307 142)"/>
+<ellipse cx="256" cy="117" rx="60" ry="25"/>
+</g>
+<text x="256" y="407" text-anchor="middle" font-family="Arial,sans-serif" font-size="64" font-weight="700" fill="#eef3f0">FBK</text>
+</svg>
