@@ -3,7 +3,7 @@
   "short_name": "FBK Estate",
   "description": "Sistem operasi ladang digital FELDA Bukit Kepayang.",
   "id": "./",
-  "start_url": "./?pwa=58",
+  "start_url": "./?pwa=73",
   "scope": "./",
   "display": "standalone",
   "background_color": "#08100d",
