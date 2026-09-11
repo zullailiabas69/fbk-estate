@@ -1,0 +1,25 @@
+<!doctype html><html lang="ms"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Cache-Control" content="no-store"><title>FBK Hybrid Vector Sharp v6.4</title><style>html,body,#base{width:100%;height:100%;margin:0;border:0;background:#0b1812;overflow:hidden}#badge{position:fixed;z-index:999;right:8px;bottom:8px;background:#08100dea;color:#fff;font:10px Arial;padding:5px 8px;border-radius:8px;pointer-events:none}</style></head><body><iframe id="base" src="v62base.html?v=64-core"></iframe><div id="badge">Memuat vektor tajam…</div><script>
+const f=document.getElementById('base'),badge=document.getElementById('badge');
+async function gunzipB64(s){const bin=atob(s.replace(/\s+/g,''));const u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);const ds=new DecompressionStream('gzip');return new Response(new Blob([u]).stream().pipeThrough(ds)).json()}
+function pathD(subs){let d='';for(const a of subs){if(a.length<4)continue;d+='M'+a[0]+' '+a[1];for(let i=2;i<a.length;i+=2)d+='L'+a[i]+' '+a[i+1];}return d}
+async function installVector(){
+ try{
+  const b64=await fetch('v64/overlay.b64?v=64',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('overlay');return r.text()});
+  const data=await gunzipB64(b64);
+  let tries=0,d,w,img,stage;
+  while(tries++<120){d=f.contentDocument;w=f.contentWindow;img=d&&d.getElementById('estateImg');stage=d&&d.getElementById('stage');if(img&&stage)break;await new Promise(r=>setTimeout(r,100));}
+  if(!img||!stage)throw Error('peta asas belum tersedia');
+  const ns='http://www.w3.org/2000/svg';const svg=d.createElementNS(ns,'svg');svg.id='estateVector';svg.setAttribute('viewBox','108 108 4552 6526');svg.setAttribute('preserveAspectRatio','none');svg.setAttribute('shape-rendering','geometricPrecision');Object.assign(svg.style,{position:'absolute',pointerEvents:'none',overflow:'hidden',zIndex:'2'});
+  const frag=d.createDocumentFragment();
+  for(const item of data.p){const st=data.s[item[0]],p=d.createElementNS(ns,'path');p.setAttribute('d',pathD(item[1]));p.setAttribute('fill','none');p.setAttribute('stroke','#'+st[0]);p.setAttribute('stroke-width',String(st[1]*2));p.setAttribute('stroke-opacity',String(st[2]??1));p.setAttribute('stroke-linejoin','round');p.setAttribute('stroke-linecap','round');frag.appendChild(p)}
+  for(const t of data.t){const e=d.createElementNS(ns,'text');const fs=t[2]*2;e.setAttribute('x',t[0]);e.setAttribute('y',t[1]+fs*.82);e.setAttribute('font-size',fs);e.setAttribute('font-family','Arial,sans-serif');e.setAttribute('fill','#'+(t[3]||'000000'));e.setAttribute('font-weight','500');e.textContent=t[4];frag.appendChild(e)}
+  svg.appendChild(frag);img.insertAdjacentElement('afterend',svg);
+  const sync=()=>{svg.style.left=img.style.left;svg.style.top=img.style.top;svg.style.width=img.style.width;svg.style.height=img.style.height;svg.style.display=img.style.display;svg.style.opacity=img.style.opacity||'1'};sync();
+  new MutationObserver(sync).observe(img,{attributes:true,attributeFilter:['style']});
+  const oldRender=w.renderMap;if(oldRender)w.renderMap=function(){const r=oldRender.apply(this,arguments);sync();return r};
+  badge.textContent='v6.4 Vektor Tajam aktif';const st=d.getElementById('status'),inf=d.getElementById('info');if(st)st.textContent='Hybrid v6.4 Vektor Tajam aktif.';if(inf)inf.textContent='GeoPDF raster + garisan dan teks vektor tajam. Alignment v5.9 dikekalkan.';
+ }catch(e){badge.textContent='Vektor gagal — '+e.message}
+}
+f.addEventListener('load',()=>setTimeout(installVector,120));
+function openOps(){try{f.contentWindow.openOps()}catch(e){}}function closeOps(){try{f.contentWindow.closeOps()}catch(e){}}function locateMe(){try{f.contentWindow.locateMe()}catch(e){}}function routeTo(k){try{f.contentWindow.routeTo(k)}catch(e){}}function setMapMode(m){try{f.contentWindow.setMapMode(m)}catch(e){}}function setFocus(m){try{f.contentWindow.setFocus(m)}catch(e){}}
+</script></body></html>
