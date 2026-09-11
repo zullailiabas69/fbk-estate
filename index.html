@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="FBK Estate">
-<title>FELDA Bukit Kepayang Digital Estate System v5.8</title>
+<title>FELDA Bukit Kepayang Digital Estate System v6.2</title>
 <style>
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;font-family:Arial,sans-serif;background:#0b1812;color:#fff}
@@ -23,109 +23,30 @@ body{overflow:hidden}
 .nav button{border:0;border-radius:10px;background:#1a2b24;color:#e8eeeb;font-weight:800;font-size:11px;cursor:pointer}
 .nav button.active{background:#d6a03a;color:#172219}
 .status{position:fixed;z-index:250;right:12px;top:12px;background:rgba(8,15,12,.9);padding:7px 9px;border-radius:10px;font-size:10px;color:#d8e1dc}
-@media(max-width:700px){
- .topbar{left:8px;top:8px;max-width:65%}.topbar b{font-size:12px}
- .status{right:8px;top:8px}
- .nav{left:8px;right:8px;bottom:7px;height:52px}.nav button{font-size:9px;padding:4px}
- .view{inset:0 0 66px 0}
-}
+@media(max-width:700px){.topbar{left:8px;top:8px;max-width:65%}.topbar b{font-size:12px}.status{right:8px;top:8px}.nav{left:8px;right:8px;bottom:7px;height:52px}.nav button{font-size:9px;padding:4px}.view{inset:0 0 66px 0}}
 </style>
 </head>
 <body>
 <div id="app">
-<div class="topbar"><b>FELDA Bukit Kepayang Digital Estate System</b><span>Production Beta v5.8</span></div>
+<div class="topbar"><b>FELDA Bukit Kepayang Digital Estate System</b><span>Production HD v6.2</span></div>
 <div id="status" class="status">Peta</div>
 <button id="installBtn" style="display:none;position:fixed;z-index:260;right:12px;top:46px;border:0;border-radius:10px;padding:7px 10px;background:#2d7d4d;color:#fff;font-weight:800;cursor:pointer" onclick="installApp()">Pasang App</button>
-
-<div id="mapView" class="view active"><iframe id="mapFrame" src="base.html?v=58-map" title="Peta FELDA"></iframe></div>
-<div id="opsView" class="view"><iframe id="opsFrame" src="base.html?v=58-ops" title="Operasi Ladang"></iframe></div>
-<div id="issueView" class="view"><iframe id="issueFrame" src="v55.html?v=58" title="Isu Lapangan"></iframe></div>
-<div id="reportView" class="view"><iframe id="reportFrame" src="v56.html?v=58" title="Laporan dan Backup"></iframe></div>
-<div id="gpsView" class="view"><iframe id="gpsFrame" src="base.html?v=58-gps" title="GPS"></iframe></div>
-
-<div class="nav">
-<button id="nMap" class="active" onclick="showView('map')">🗺️<br>Peta</button>
-<button id="nOps" onclick="showView('ops')">🧾<br>Operasi</button>
-<button id="nIssue" onclick="showView('issue')">⚠️<br>Isu</button>
-<button id="nReport" onclick="showView('report')">📊<br>Laporan</button>
-<button id="nGps" onclick="showView('gps')">📍<br>GPS</button>
+<div id="mapView" class="view active"><iframe id="mapFrame" src="v62base.html?v=62-map" title="Peta FELDA"></iframe></div>
+<div id="opsView" class="view"><iframe id="opsFrame" src="v62base.html?v=62-ops" title="Operasi Ladang"></iframe></div>
+<div id="issueView" class="view"><iframe id="issueFrame" src="v55.html?v=62" title="Isu Lapangan"></iframe></div>
+<div id="reportView" class="view"><iframe id="reportFrame" src="v56.html?v=62" title="Laporan dan Backup"></iframe></div>
+<div id="gpsView" class="view"><iframe id="gpsFrame" src="v62base.html?v=62-gps" title="GPS"></iframe></div>
+<div class="nav"><button id="nMap" class="active" onclick="showView('map')">🗺️<br>Peta</button><button id="nOps" onclick="showView('ops')">🧾<br>Operasi</button><button id="nIssue" onclick="showView('issue')">⚠️<br>Isu</button><button id="nReport" onclick="showView('report')">📊<br>Laporan</button><button id="nGps" onclick="showView('gps')">📍<br>GPS</button></div>
 </div>
-</div>
-
 <script>
-const views={map:'mapView',ops:'opsView',issue:'issueView',report:'reportView',gps:'gpsView'};
-const navs={map:'nMap',ops:'nOps',issue:'nIssue',report:'nReport',gps:'nGps'};
-const labels={map:'Peta',ops:'Operasi',issue:'Isu Lapangan',report:'Laporan & Backup',gps:'GPS'};
-function hidePanels(frame){
-  try{
-    const w=frame.contentWindow,d=frame.contentDocument;
-    if(w.closeOps)w.closeOps();
-    const p=d&&d.getElementById('panel'); if(p)p.classList.remove('open');
-  }catch(e){}
-}
-function showView(name){
-  Object.values(views).forEach(id=>document.getElementById(id).classList.remove('active'));
-  Object.values(navs).forEach(id=>document.getElementById(id).classList.remove('active'));
-  document.getElementById(views[name]).classList.add('active');
-  document.getElementById(navs[name]).classList.add('active');
-  document.getElementById('status').textContent=labels[name];
-
-  if(name==='map'){
-    const f=document.getElementById('mapFrame');hidePanels(f);
-  }
-  if(name==='ops'){
-    const f=document.getElementById('opsFrame');
-    setTimeout(()=>{try{if(f.contentWindow.openOps)f.contentWindow.openOps()}catch(e){}},80);
-  }
-  if(name==='issue'){
-    const f=document.getElementById('issueFrame');
-    setTimeout(()=>{try{const p=f.contentDocument.getElementById('panel');if(p&&!p.classList.contains('open'))f.contentWindow.togglePanel()}catch(e){}},120);
-  }
-  if(name==='report'){
-    const f=document.getElementById('reportFrame');
-    setTimeout(()=>{try{const p=f.contentDocument.getElementById('panel');if(p&&!p.classList.contains('open'))f.contentWindow.togglePanel()}catch(e){}},120);
-  }
-  if(name==='gps'){
-    const f=document.getElementById('gpsFrame');
-    setTimeout(()=>{try{if(f.contentWindow.locateMe)f.contentWindow.locateMe()}catch(e){}},120);
-  }
-}
-['mapFrame','opsFrame','gpsFrame'].forEach(id=>{
- const f=document.getElementById(id);
- f.addEventListener('load',()=>{try{hidePanels(f)}catch(e){}});
-});
-
-let deferredPrompt=null;
-window.addEventListener('beforeinstallprompt',e=>{
-  e.preventDefault(); deferredPrompt=e;
-  document.getElementById('installBtn').style.display='block';
-});
-async function installApp(){
-  if(!deferredPrompt)return;
-  deferredPrompt.prompt();
-  await deferredPrompt.userChoice;
-  deferredPrompt=null;
-  document.getElementById('installBtn').style.display='none';
-}
-window.addEventListener('appinstalled',()=>{document.getElementById('installBtn').style.display='none'});
-
-if('serviceWorker' in navigator){
-  window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js?v=58').catch(()=>{}));
-}
-
-function repairNestedBase(frame){
-  try{
-    const d=frame.contentDocument;
-    const inner=d&&d.getElementById('base');
-    if(inner && !inner.src.includes('base.html')) inner.src='base.html?v=58-module-base';
-  }catch(e){}
-}
-document.getElementById('issueFrame').addEventListener('load',function(){repairNestedBase(this)});
-document.getElementById('reportFrame').addEventListener('load',function(){repairNestedBase(this)});
-
-window.addEventListener('online',()=>document.getElementById('status').title='Dalam talian');
-window.addEventListener('offline',()=>document.getElementById('status').title='Luar talian — data tempatan masih tersedia');
-
+const views={map:'mapView',ops:'opsView',issue:'issueView',report:'reportView',gps:'gpsView'};const navs={map:'nMap',ops:'nOps',issue:'nIssue',report:'nReport',gps:'nGps'};const labels={map:'Peta',ops:'Operasi',issue:'Isu Lapangan',report:'Laporan & Backup',gps:'GPS'};
+function hidePanels(frame){try{const w=frame.contentWindow,d=frame.contentDocument;if(w.closeOps)w.closeOps();const p=d&&d.getElementById('panel');if(p)p.classList.remove('open')}catch(e){}}
+function showView(name){Object.values(views).forEach(id=>document.getElementById(id).classList.remove('active'));Object.values(navs).forEach(id=>document.getElementById(id).classList.remove('active'));document.getElementById(views[name]).classList.add('active');document.getElementById(navs[name]).classList.add('active');document.getElementById('status').textContent=labels[name];if(name==='map'){const f=document.getElementById('mapFrame');hidePanels(f)}if(name==='ops'){const f=document.getElementById('opsFrame');setTimeout(()=>{try{if(f.contentWindow.openOps)f.contentWindow.openOps()}catch(e){}},80)}if(name==='issue'){const f=document.getElementById('issueFrame');setTimeout(()=>{try{const p=f.contentDocument.getElementById('panel');if(p&&!p.classList.contains('open'))f.contentWindow.togglePanel()}catch(e){}},120)}if(name==='report'){const f=document.getElementById('reportFrame');setTimeout(()=>{try{const p=f.contentDocument.getElementById('panel');if(p&&!p.classList.contains('open'))f.contentWindow.togglePanel()}catch(e){}},120)}if(name==='gps'){const f=document.getElementById('gpsFrame');setTimeout(()=>{try{if(f.contentWindow.locateMe)f.contentWindow.locateMe()}catch(e){}},120)}}
+['mapFrame','opsFrame','gpsFrame'].forEach(id=>{const f=document.getElementById(id);f.addEventListener('load',()=>{try{hidePanels(f)}catch(e){}})});
+let deferredPrompt=null;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;document.getElementById('installBtn').style.display='block'});async function installApp(){if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;document.getElementById('installBtn').style.display='none'}window.addEventListener('appinstalled',()=>{document.getElementById('installBtn').style.display='none'});
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js?v=62').catch(()=>{}))}
+function repairNestedBase(frame){try{const d=frame.contentDocument;const inner=d&&d.getElementById('base');if(inner&&!inner.src.includes('base.html'))inner.src='base.html?v=62-module-base'}catch(e){}}
+document.getElementById('issueFrame').addEventListener('load',function(){repairNestedBase(this)});document.getElementById('reportFrame').addEventListener('load',function(){repairNestedBase(this)});
+window.addEventListener('online',()=>document.getElementById('status').title='Dalam talian');window.addEventListener('offline',()=>document.getElementById('status').title='Luar talian — data tempatan masih tersedia');
 </script>
-</body>
-</html>
+</body></html>
